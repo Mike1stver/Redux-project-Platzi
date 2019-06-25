@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const Usuarios = () => {
-  const [usuarios, setUsuarios] = useState([]);
+import { connect } from "react-redux";
+import * as usuariosActions from "../../actions/usuariosActions";
+
+const Usuarios = props => {
+  // const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const { data } = await axios(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      setUsuarios(data);
+      // const { data } = await axios(
+      //   "https://jsonplaceholder.typicode.com/users"
+      // );
+      // setUsuarios(data);
+      props.traerTodos();
     }
     fetchData();
     console.log("primero se mostrara este texto");
   }, []);
+  console.log(props);
 
   return (
-    <div className="margen">
+    <div>
       <table className="tabla">
         <thead>
           <tr>
@@ -25,7 +30,7 @@ const Usuarios = () => {
           </tr>
         </thead>
         <tbody>
-          {usuarios.map(item => (
+          {props.usuarios.map(item => (
             <tr>
               <td>{item.name}</td>
               <td>{item.email}</td>
@@ -38,4 +43,23 @@ const Usuarios = () => {
   );
 };
 
-export default Usuarios;
+const mapStateToProps = reducers => {
+  // Devuelven un objeto
+  return reducers.usuariosReducer;
+};
+
+const mapDispatchToProps = dispatch => ({
+  // Devuelven un objeto, se coloca parentesis porque devuelve un objeto
+  // Dispatch tiene como parametro a un objeto o ACTION
+  // Tambien se pueden usar funciones que devuelvan Objetos, ACTION CREATORS
+  traerTodos: () =>
+    dispatch({
+      type: "traer_usuarios",
+      payload: [1, 2, 3]
+    })
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Usuarios);
