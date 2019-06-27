@@ -7,15 +7,15 @@ const Usuarios = props => {
   // const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
-      // const { data } = await axios(
-      //   "https://jsonplaceholder.typicode.com/users"
-      // );
-      // setUsuarios(data);
-      props.traerTodos();
-    }
-    fetchData();
-    console.log("primero se mostrara este texto");
+    // async function fetchData() {
+    // const { data } = await axios(
+    //   "https://jsonplaceholder.typicode.com/users"
+    // );
+    // setUsuarios(data);
+    props.traerTodos();
+    // }
+    // fetchData();
+    // console.log("primero se mostrara este texto");
   }, []);
   console.log(props);
 
@@ -52,11 +52,24 @@ const mapDispatchToProps = dispatch => ({
   // Devuelven un objeto, se coloca parentesis porque devuelve un objeto
   // Dispatch tiene como parametro a un objeto o ACTION
   // Tambien se pueden usar funciones que devuelvan Objetos, ACTION CREATORS
-  traerTodos: () =>
-    dispatch({
-      type: "traer_usuarios",
-      payload: [1, 2, 3]
-    })
+  traerTodos: () => {
+    // dispatch({
+    //   type: "traer_usuarios",
+    //   payload: [1, 2, 3]
+    // })
+    // setUsuarios(data);
+    // props.traerTodos();
+    dispatch(async dispatch => {
+      const { data } = await axios(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+      console.log(data);
+      dispatch({
+        type: "traer_usuarios",
+        payload: data
+      });
+    });
+  }
 });
 
 export default connect(
