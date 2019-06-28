@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import * as usuariosActions from "../../actions/usuariosActions";
+import { TRAER_TODOS } from "../../types/usuariosTypes";
 
 const Usuarios = props => {
   // const [usuarios, setUsuarios] = useState([]);
@@ -60,14 +61,18 @@ const mapDispatchToProps = dispatch => ({
     // setUsuarios(data);
     // props.traerTodos();
     dispatch(async dispatch => {
-      const { data } = await axios(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      console.log(data);
-      dispatch({
-        type: "traer_usuarios",
-        payload: data
-      });
+      try {
+        const { data } = await axios(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        console.log(data);
+        dispatch({
+          type: TRAER_TODOS,
+          payload: data
+        });
+      } catch (error) {
+        console.log("error", error.message);
+      }
     });
   }
 });
