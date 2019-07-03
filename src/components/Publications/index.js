@@ -42,17 +42,28 @@ const Publications = ({
     // console.log("declarado tercero");
   }, []);
 
-  // useEffect(() => {
-  //   !("publicationsKey" in usuariosReducer.users[match.params.key]) &&
-  //     publicacionesTraerPorUsuario(match.params.key);
-  // }, [usuariosReducer]);
+  useEffect(() => {
+    console.log("aparece en useEffect");
+    console.log(usuariosReducer);
+    console.log(usuariosReducer.users);
+    console.log(usuariosReducer.users[match.params.key]);
+
+    if (usuariosReducer.users.length) {
+      console.log(
+        !("publicationsKey" in usuariosReducer.users[match.params.key])
+      );
+    }
+    // !("publicationsKey" in usuariosReducer.users[match.params.key]) &&
+    //   publicacionesTraerPorUsuario(match.params.key);
+    //  }, [usuariosReducer]);
+  }, [usuariosReducer.users]);
 
   // console.log(usuariosReducer);
   // console.log(publicacionesReducer);
 
-  console.log("aparece al final");
-  console.log(usuariosReducer);
-  console.log(usuariosReducer.users);
+  // console.log("aparece al final");
+  // console.log(usuariosReducer);
+  // console.log(usuariosReducer.users);
 
   const locateUser = () => {
     if (usuariosReducer.loading) {
